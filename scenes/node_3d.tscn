@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://cq45yrgsrhs1b"]
+
+[ext_resource type="PackedScene" uid="uid://2dqe3e2t4pln" path="res://scenes/character.tscn" id="1_yqba0"]
+[ext_resource type="Script" path="res://scripts/camera_3d.gd" id="2_bgpiu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnrjx"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.128709, 0.080629, 0.0441046, 1)
+backlight_enabled = true
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_d7dd7"]
+rayleigh_color = Color(0.192446, 0.0344588, 0.0029058, 1)
+mie_color = Color(0.367197, 0.25452, 0.36812, 1)
+
+[sub_resource type="Sky" id="Sky_ltckc"]
+sky_material = SubResource("PhysicalSkyMaterial_d7dd7")
+
+[sub_resource type="Environment" id="Environment_o5bkb"]
+background_mode = 2
+background_energy_multiplier = 8.92
+sky = SubResource("Sky_ltckc")
+ambient_light_source = 3
+ambient_light_color = Color(0.393024, 0.158325, 0.11791, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 0.0215884, 0.999767, 0, -0.999767, 0.0215884, 0.000692442, 2.52417, 0.0218958)
+projection = 1
+size = 1.952
+script = ExtResource("2_bgpiu")
+target = NodePath("../Node3D")
+
+[node name="Node3D" parent="." instance=ExtResource("1_yqba0")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00734705, 0)
+use_collision = true
+size = Vector3(13.5393, 0.0217285, 13.8086)
+material = SubResource("StandardMaterial3D_mnrjx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_o5bkb")

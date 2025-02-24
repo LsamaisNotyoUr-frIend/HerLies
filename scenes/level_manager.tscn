@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0yubys66cff5"]
+
+[ext_resource type="Script" path="res://scenes/level_manager.gd" id="1_q4d8p"]
+
+[node name="LevelManager" type="Node2D" node_paths=PackedStringArray("campos1", "campos2", "camera", "spawners")]
+script = ExtResource("1_q4d8p")
+campos1 = NodePath("")
+campos2 = NodePath("")
+camera = NodePath("")
+spawners = [NodePath(""), NodePath("")]
