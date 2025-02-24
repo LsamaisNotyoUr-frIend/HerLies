@@ -1,0 +1,145 @@
+[gd_scene load_steps=19 format=3 uid="uid://b4dnrpc3mmk5f"]
+
+[ext_resource type="Texture2D" uid="uid://bj0c74ds0v41b" path="res://assets/Unassigned/Monster_Pack_Free_Character/Monster Pack Character (Free)/Idle/Character_Idle.png" id="1_eb4j3"]
+[ext_resource type="Script" path="res://scripts/mobs_characters.gd" id="1_ffqlv"]
+[ext_resource type="Texture2D" uid="uid://0q6vrtbima0g" path="res://assets/Unassigned/Monster_Pack_Free_Character/Monster Pack Character (Free)/Move/Character_Move.png" id="2_irfqt"]
+[ext_resource type="Script" path="res://scripts/HurtBox.gd" id="3_l0uq3"]
+[ext_resource type="Script" path="res://scripts/ray_cast_2d.gd" id="5_rokvf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3n5bs"]
+atlas = ExtResource("1_eb4j3")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbkyc"]
+atlas = ExtResource("1_eb4j3")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dooli"]
+atlas = ExtResource("1_eb4j3")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl1ck"]
+atlas = ExtResource("1_eb4j3")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ece3h"]
+atlas = ExtResource("2_irfqt")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wca2"]
+atlas = ExtResource("2_irfqt")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsu0y"]
+atlas = ExtResource("2_irfqt")
+region = Rect2(256, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83soc"]
+atlas = ExtResource("2_irfqt")
+region = Rect2(384, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ic6mm"]
+atlas = ExtResource("2_irfqt")
+region = Rect2(512, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwxl4"]
+atlas = ExtResource("2_irfqt")
+region = Rect2(640, 256, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7r8kr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3n5bs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbkyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dooli")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yl1ck")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ece3h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wca2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nsu0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83soc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ic6mm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwxl4")
+}],
+"loop": true,
+"name": &"move",
+"speed": 7.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i2thy"]
+radius = 4.0
+height = 20.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8urk6"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite_2d", "hurt_box", "raycats")]
+z_index = 3
+scale = Vector2(7, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_ffqlv")
+animated_sprite_2d = NodePath("AnimatedSprite2D")
+hurt_box = NodePath("HurtBox")
+raycats = [NodePath("Node2D/RayCast2D"), NodePath("Node2D/RayCast2D2"), NodePath("Node2D/RayCast2D3"), NodePath("Node2D/RayCast2D4")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7r8kr")
+animation = &"move"
+autoplay = "default"
+frame_progress = 0.447764
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_i2thy")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("user")]
+collision_mask = 32
+script = ExtResource("3_l0uq3")
+user = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CapsuleShape2D_8urk6")
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2(5.32572, 1)
+
+[node name="RayCast2D" type="RayCast2D" parent="Node2D"]
+target_position = Vector2(-0.080472, 28.8571)
+script = ExtResource("5_rokvf")
+
+[node name="RayCast2D2" type="RayCast2D" parent="Node2D"]
+target_position = Vector2(0.026824, -28.2857)
+script = ExtResource("5_rokvf")
+
+[node name="RayCast2D3" type="RayCast2D" parent="Node2D"]
+scale = Vector2(0.2, 5)
+target_position = Vector2(25.0804, -0.0285714)
+script = ExtResource("5_rokvf")
+
+[node name="RayCast2D4" type="RayCast2D" parent="Node2D"]
+scale = Vector2(0.2, 5)
+target_position = Vector2(-26.5558, 0.0857143)
+script = ExtResource("5_rokvf")
